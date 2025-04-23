@@ -1,3 +1,4 @@
+
 body {
     font-family: 'Arial', sans-serif;
     display: flex;
@@ -5,15 +6,18 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    background: linear-gradient(135deg, #ff7e5f, #feb47b);
+    background: linear-gradient(135deg, #ffc0cb, #ffb6c1, #ffe4e1);
+    animation: bgPulse 6s ease-in-out infinite;
     overflow: hidden;
     position: relative;
 }
 
 .container {
     text-align: center;
-    position: relative;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .smooth-image {
@@ -21,33 +25,36 @@ body {
     height: auto;
     border-radius: 15px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    transition: transform 0.5s ease, opacity 0.5s ease-in-out;
-    margin-bottom: 20px;
+    transform: scale(1);
+    opacity: 0;
+    animation: imageFadeIn 2s ease forwards;
+    animation-delay: 0.3s;
 }
 
-.smooth-image:hover {
-    transform: scale(1.1);
+@keyframes imageFadeIn {
+    0% { opacity: 0; transform: scale(1.05); }
+    100% { opacity: 1; transform: scale(1); }
 }
 
 .drop-button {
-    background-color: #4CAF50;
+    background-color: #ff69b4;
     border: none;
     color: white;
     padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: block;
     font-size: 18px;
-    margin: 0 auto;
     cursor: pointer;
     border-radius: 5px;
-    transition: background-color 0.3s ease, transform 0.3s ease, opacity 0.5s ease-in-out;
-    margin-top: 20px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 10px #ff69b4aa;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .drop-button:hover {
-    background-color: #45a049;
-    transform: translateY(-3px);
+    background-color: #ff1493;
+    transform: translateY(-2px);
+    box-shadow: 0 0 20px #ff69b4;
 }
 
 .hidden-message {
@@ -63,45 +70,41 @@ body {
 
 .celebratory-text {
     font-weight: bold;
-    animation: flashing 1s infinite;
+    color: #fff0f5;
     display: block;
     margin-bottom: 0.5em;
+    animation: glowPulse 1.5s infinite ease-in-out;
+    text-shadow: 0 0 10px #ff99cc, 0 0 20px #ff66b2, 0 0 30px #ff1493;
 }
 
-.emoji-container {
+@keyframes glowPulse {
+    0%, 100% { transform: scale(1); text-shadow: 0 0 10px #ff99cc; }
+    50% { transform: scale(1.1); text-shadow: 0 0 15px white; }
+}
+
+.confetti-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
     pointer-events: none;
-    z-index: 0; /* Make sure it's behind all content */
+    z-index: 0;
 }
 
-.celebratory-emoji {
+.confetti {
     position: absolute;
     font-size: 2em;
-    opacity: 0;
-    display: block;
-    animation: fly 3s ease-out forwards;
-    transform: translateX(-50%);
+    animation: fall 4s linear forwards;
+    opacity: 0.9;
 }
 
-
-
-@keyframes flashing {
-    0% { color: white; }
-    50% { color: yellow; }
-    100% { color: white; }
+@keyframes fall {
+    0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) translateX(var(--x)) rotate(var(--r)); opacity: 0; }
 }
 
-@keyframes fly {
-    0% {
-        transform: translateY(0) translateX(0) rotate(0deg);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(100vh) translateX(var(--x)) rotate(var(--r));
-        opacity: 0;
-    }
+@keyframes bgPulse {
+    0%, 100% { background: linear-gradient(135deg, #ffc0cb, #ffb6c1, #ffe4e1); }
+    50% { background: linear-gradient(135deg, #ffd1dc, #ffbbe0, #ffe4e9); }
 }
